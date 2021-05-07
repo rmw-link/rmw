@@ -24,7 +24,6 @@ coffeescript version
 #include ./src/index_test.coffee
 ```
 
-```
 
 javascript version
 
