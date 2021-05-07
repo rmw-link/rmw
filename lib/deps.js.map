@@ -8,6 +8,6 @@
   "names": [],
   "mappings": ";AAAA,OAAA;EAAQ,OAAA,QAAR;CAAA",
   "sourcesContent": [
-    "export {default as Upnp} from 'https://deno.land/x/rmw_upnp@0.0.7/lib/index.js'\n\n\n"
+    "export {default as Upnp} from 'https://deno.land/x/rmw_upnp/lib/index.js'\n\n\n"
   ]
 }
