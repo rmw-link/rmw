@@ -6,8 +6,8 @@
     "src/index_test.coffee"
   ],
   "names": [],
-  "mappings": ";AAAA,OAAA;EAAQ,IAAR;CAAA,MAAA;;AAEG,CAAA,KAAA,CAAA,CAAA,GAAA;AACH,MAAA;EAAE,IAAA,GAAO,CAAA,MAAM,IAAA,CAAA,CAAN;EACP,IAAG,CAAI,IAAP;IACE,OAAO,CAAC,GAAR,CAAY,oBAAZ;AACA,WAFF;GADF;;EAME,MAAM,IAAI,CAAC,OAAL,CACJ,KADI,EACE,IADF,EACO,IADP,EACY,CADZ,EACc,WADd;SAGN,OAAO,CAAC,GAAR,CAAY,CAAA,MAAM,IAAI,CAAC,GAAL,CAAA,CAAN,CAAZ;AAVC,CAAA",
+  "mappings": ";AAAA,OAAO,GAAP,MAAA;;AAEA,GAAA,CAAA",
   "sourcesContent": [
-    "import {Upnp} from './deps.js'\n\ndo =>\n  upnp = await Upnp()\n  if not upnp\n    console.log \"UPNP not available\"\n    return\n\n  # mapPort(protocol,internal,external,duration=0,description=\"\")\n  await upnp.mapPort(\n    \"UDP\",8080,8080,0,\"upnp test\"\n  )\n  console.log await upnp.map()\n"
+    "import Rmw from './index.js'\n\nRmw()\n"
   ]
 }
