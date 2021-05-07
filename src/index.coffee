@@ -1,4 +1,15 @@
-import {Upnp} from './deps.js'
+import {Upnp,cac} from './deps.js'
+
+CLI = cac()
+  .help()
+  .version()
+  .option(
+    "--dir","profile dir"
+  )
+
+
+ARGS = CLI.parse()
+
 
 export default =>
   udp = Deno.listenDatagram {
@@ -21,11 +32,13 @@ export default =>
     ip = await upnp.mapPort(
       "UDP",port,port,0,"upnp test"
     )
-    for {NewInternalClient,NewExternalPort,NewInternalPort,NewProtocol} from await upnp.map()
-       if NewProtocol!="UDP"
-         continue
-       if NewInternalClient!=ip
-         continue
-       console.log NewExternalPort,NewInternalPort
+    for await {NewInternalClient,NewExternalPort,NewInternalPort,NewProtocol} from upnp.map()
+      if NewProtocol!="UDP"
+        continue
+      if NewInternalClient!=ip
+        continue
+      if NewInternalPort == port
+        console.log NewExternalPort
+        break
 
 

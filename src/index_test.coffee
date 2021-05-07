@@ -1,3 +1,5 @@
 import Rmw from './index.js'
 
-Rmw()
+
+do =>
+  await Rmw()
