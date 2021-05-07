@@ -34,7 +34,7 @@ javascript version
 
 output like below
 
-```json
+```javascript
 [
   {
     NewPortMappingDescription: "upnp test",

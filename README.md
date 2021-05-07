@@ -65,7 +65,7 @@ import upnp from './index.js';
 
 output like below
 
-```json
+```javascript
 [
   {
     NewPortMappingDescription: "upnp test",
