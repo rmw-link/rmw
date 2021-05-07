@@ -4,16 +4,16 @@
 
 upnp port mapping for deno
 
-## import
+## import or export
 
 ```
-import Upnp from 'https://deno.land/x/rmw_upnp@0.0.2/mod.js'
+import Upnp from 'https://deno.land/x/rmw_upnp@0.0.3/mod.js'
 ```
 
 or export in your `deps.js`
 
 ```
-export Upnp from 'https://deno.land/x/rmw_upnp@0.0.2/mod.js'
+export Upnp from 'https://deno.land/x/rmw_upnp@0.0.3/mod.js'
 ```
 
 ## use
