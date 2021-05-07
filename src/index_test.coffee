@@ -1,4 +1,4 @@
-import Upnp from './index.js'
+import {Upnp} from './deps.js'
 
 do =>
   upnp = await Upnp()
