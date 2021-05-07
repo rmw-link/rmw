@@ -5,13 +5,13 @@ upnp port mapping for deno
 ## import
 
 ```
-import { xml } from 'https://deno.land/x/extract@0.1.34/mod.js'
+import { xml } from 'https://deno.land/x/extract@0.0.1/mod.js'
 ```
 
 or export in your `deps.js`
 
 ```
-export { xml } from 'https://deno.land/x/extract@0.1.34/mod.js'
+export { xml } from 'https://deno.land/x/extract@0.0.1/mod.js'
 ```
 
 ## use
