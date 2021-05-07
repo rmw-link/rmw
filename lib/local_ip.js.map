@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "local_ip.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/local_ip.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,IAAA;;AAAA,OAAA,QAAe,QAAA,GAAW,KAAA,CAAC,QAAD,EAAW,IAAX,CAAA,GAAA;AAC1B,MAAA,MAAA;;;EAEE,MAAA,GAAS,CAAA,MAAM,IAAI,CAAC,OAAL,CAAa,CAC1B,IAD0B,EAE1B,QAF0B,CAAb,CAAN;EAIT,MAAM,CAAC,KAAP,CAAA;AACA,SAAO,MAAM,CAAC,SAAS,CAAC;AARA",
+  "sourcesContent": [
+    "export default local_ip = (hostname, port)=>\n  # https://github.com/denoland/deno/issues/10519\n  # Deno.connect not support transport:\"udp\"\n  socket = await Deno.connect({\n    port\n    hostname\n  })\n  socket.close()\n  return socket.localAddr.hostname\n\n\n"
+  ]
+}

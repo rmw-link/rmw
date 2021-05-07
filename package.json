@@ -1,0 +1,19 @@
+{
+  "license": "MulanPSL-2.0",
+  "exports": {
+    ".": "./lib/index.js",
+    "./*": "./lib/*"
+  },
+  "files": [
+    "/lib"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@rmw/md-include": "^0.4.5",
+    "coffeescript": "^2.5.1"
+  },
+  "scripts": {
+    "prepare": "rm -rf lib && rsync -qav --include='*/' --include='*.txt' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && npx coffee -m --compile --output lib src/"
+  },
+  "type": "module"
+}
