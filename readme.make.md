@@ -5,13 +5,13 @@ upnp port mapping for deno
 ## import or export
 
 ```
-import Upnp from 'https://deno.land/x/rmw_upnp@0.0.5/lib/index.js'
+import Upnp from 'https://deno.land/x/rmw_upnp@0.0.6/lib/index.js'
 ```
 
 or export in your `deps.js`
 
 ```
-export Upnp from 'https://deno.land/x/rmw_upnp@0.0.5/lib/index.js'
+export Upnp from 'https://deno.land/x/rmw_upnp@0.0.6/lib/index.js'
 ```
 
 ## use

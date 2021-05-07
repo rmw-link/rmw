@@ -6,8 +6,8 @@
     "src/deps.coffee"
   ],
   "names": [],
-  "mappings": ";AAAA,OAAA;EAAS,MAAA,cAAT;EAA+B,MAAA,cAA/B;CAAA;;AAEA,OAAA;EAAQ,OAAA,OAAR;CAAA",
+  "mappings": ";AAAA,OAAA;EAAS,MAAA,cAAT;EAA+B,MAAA,cAA/B;CAAA;;AAEA,OAAA;EAAQ,OAAA,OAAR;CAAA;;AAEA,OAAA;EAAQ,OAAA,SAAR;CAAA",
   "sourcesContent": [
-    "export { encode as utf8Encode, decode as utf8Decode } from 'https://deno.land/x/utf8/mod.js'\n\nexport {default as Xml} from 'https://deno.land/x/extract@0.1.36/lib/xml.js'\n\n"
+    "export { encode as utf8Encode, decode as utf8Decode } from 'https://deno.land/x/utf8/mod.js'\n\nexport {default as Xml} from 'https://deno.land/x/extract@0.1.36/lib/xml.js'\n\nexport {default as sleep} from 'https://deno.land/x/rmw_sleep@0.0.4/lib/sleep.js'\n\n"
   ]
 }

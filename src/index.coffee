@@ -2,7 +2,7 @@
 
 # 参考资料: [UPNP自动端口映射的实现](https://blog.csdn.net/zfrong/article/details/3305738)
 
-import {Xml,utf8Decode,utf8Encode} from './deps.js'
+import {sleep, Xml,utf8Decode,utf8Encode} from './deps.js'
 import local_ip from './local_ip.js'
 
 M_SEARCH = utf8Encode """M-SEARCH * HTTP/1.1
@@ -144,25 +144,36 @@ _control_url = (url)=>
 
 export default =>
   udp = Udp()
+  new Promise (resolve)=>
+    waiting = true
+    queueMicrotask(
+      =>
+        n = 0
+        while waiting and (n++ < 3)
+          await udp.send(
+            M_SEARCH
+            {
+              hostname:"239.255.255.250"
+              port:1900
+              transport:"udp"
+            }
+          )
+          await sleep 1
+        if waiting
+          resolve()
+    )
 
-  udp.send(
-    M_SEARCH
-    {
-      hostname:"239.255.255.250"
-      port:1900
-      transport:"udp"
-    }
-  )
+    [msg, remote] = await udp.receive(new Uint8Array(1472))
 
-  [msg, remote] = await udp.receive(new Uint8Array(1472))
+    msg = utf8Decode msg
+    msg = msg.replace(/\r/g,'').split("\n")
+    for i from msg
+      if i.startsWith("LOCATION:")
+        url = i.slice(9).trim()
+        break
 
-  msg = utf8Decode msg
-  msg = msg.replace(/\r/g,'').split("\n")
-  for i from msg
-    if i.startsWith("LOCATION:")
-      url = i.slice(9).trim()
-      break
-
-  if url
-    return _control_url url
+    if url
+      waiting = undefined
+      resolve _control_url url
+    return
 
