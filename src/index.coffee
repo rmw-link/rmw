@@ -3,6 +3,7 @@
 # 参考资料: [UPNP自动端口映射的实现](https://blog.csdn.net/zfrong/article/details/3305738)
 
 import {Xml,utf8Decode,utf8Encode} from './deps.js'
+import local_ip from './local_ip.js'
 
 M_SEARCH = utf8Encode """M-SEARCH * HTTP/1.1
 HOST:239.255.255.250:1900
@@ -14,7 +15,6 @@ class UpnpError extends Error
   constructor:($)->
     super($.faultstring+" "+$.errorCode+" : "+$.errorDescription)
     @$=$
-
 
 Udp = =>
 
@@ -32,16 +32,6 @@ Udp = =>
 
 fetch_xml = (url, options={})=>
   Xml await (await fetch(url, options)).text()
-
-export local_ip = (hostname, port)=>
-  # https://github.com/denoland/deno/issues/10519
-  # Deno.connect not support transport:"udp"
-  socket = await Deno.connect({
-    port
-    hostname
-  })
-  socket.close()
-  return socket.localAddr.hostname
 
 
 class _SOAPAction
@@ -150,7 +140,6 @@ _control_url = (url)=>
 
   if controlURL
     return SOAPAction(controlURL, serviceType)
-
 
 
 export default =>
