@@ -1,6 +1,5 @@
 #!/bin/sh
 
 npm run prepare
-deno bundle --unstable ./lib/index.js > ./mod.js
 npx md-include .markdown.json
 git add -u
