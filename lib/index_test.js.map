@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "index_test.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/index_test.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAO,GAAP,MAAA;;AAGG,CAAA,KAAA,CAAA,CAAA,GAAA;SACD,CAAA,MAAM,GAAA,CAAA,CAAN;AADC,CAAA",
+  "sourcesContent": [
+    "import Rmw from './index.js'\n\n\ndo =>\n  await Rmw()\n"
+  ]
+}

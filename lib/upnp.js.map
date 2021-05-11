@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "upnp.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/upnp.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAA;EAAQ,IAAR;CAAA,MAAA;;AAEA,OAAA,QAAe,KAAA,CAAC,IAAD,EAAO,SAAP,CAAA,GAAA;AAEf,MAAA,eAAA,EAAA,iBAAA,EAAA,eAAA,EAAA,WAAA,EAAA,EAAA,EAAA,GAAA,EAAA,OAAA,EAAA,IAAA,EAAA;EAAE,IAAA,GAAO,CAAA,MAAM,IAAA,CAAA,CAAN;EACP,IAAG,CAAI,IAAP;IACE,OAAO,CAAC,GAAR,CAAY,oBAAZ;AACA,WAFF;GADF;;EAME,EAAA,GAAK,CAAA,MAAM,IAAI,CAAC,OAAL,CACT,KADS,EACH,IADG,EACE,IADF,EACO,CADP,EACU,kBADV,CAAN;AAGL;AAAA;EAAA,oBAAA;KAAU,CAAC,iBAAD,EAAmB,eAAnB,EAAmC,eAAnC,EAAmD,WAAnD;IACR,IAAG,WAAW,CAAC,WAAZ,CAAA,CAAA,KAA2B,SAA9B;AACE,eADF;;IAEA,IAAG,iBAAA,KAAmB,EAAtB;AACE,eADF;;IAEA,IAAG,eAAA,KAAmB,IAAtB;MACE,OAAO,CAAC,GAAR,CAAY,MAAZ,EAAoB,eAApB,EAAqC,IAArC,EAA2C,IAA3C;AACA,YAFF;KAAA,MAAA;2BAAA;;EALF,CAAA;;AAXa",
+  "sourcesContent": [
+    "import {Upnp} from './deps.js'\n\nexport default (port, transport)=>\n\n  upnp = await Upnp()\n  if not upnp\n    console.log \"UPNP not available\"\n    return\n\n  # mapPort(protocol,internal,external,duration=0,description=\"\")\n  ip = await upnp.mapPort(\n    \"UDP\",port,port,0, \"https://rmw.link\"\n  )\n  for await {NewInternalClient,NewExternalPort,NewInternalPort,NewProtocol} from upnp.map()\n    if NewProtocol.toLowerCase()!=transport\n      continue\n    if NewInternalClient!=ip\n      continue\n    if NewInternalPort == port\n      console.log \"upnp\", NewExternalPort, \"=>\", port\n      break\n"
+  ]
+}

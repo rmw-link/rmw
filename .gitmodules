@@ -1,0 +1,3 @@
+[submodule "wasm/blake3"]
+	path = wasm/blake3
+	url = git@github.com:rmw-deno-lib/blake3.git

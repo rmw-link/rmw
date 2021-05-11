@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "boot.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/boot.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAA;EAAQ,KAAR;CAAA,MAAA;;AACA,OAAO,IAAP,MAAA;;AACA,OAAO,GAAP,MAAA;;AACA,OAAO,MAAP,MAAA;;AAEA,OAAA,QAAe,KAAA,CAAC,KAAD,CAAA,GAAA;AACf,MAAA,GAAA,EAAA,QAAA,EAAA,MAAA,EAAA,IAAA,EAAA,SAAA,EAAA;EAAE,MAAM,CAAC,CAAP,GAAW;EAEX,SAAA,GAAY;EACZ,QAAA,GAAW;EAEX,MAAA,GAAS,CAAC,IAAD,CAAA,GAAA;AACX,QAAA;IAAI,GAAA,GAAM,IAAI,CAAC,cAAL,CAAoB,CACxB,IADwB,EAExB,SAFwB,EAGxB,QAHwB,CAApB;IAKN,GAAA,CAAI,GAAJ;WACA;EAPO;EAST,IAAA,GAAQ,CAAA,MAAM,MAAM,CAAC,IAAb;EACR,IAAG,IAAH;IACE,IAAA,GAAO,QAAA,CAAS,IAAT;IACP,GAAA,GAAM,MAAA,CAAO,IAAP,EAFR;GAAA,MAAA;AAKE;MACE,GAAA,GAAM,MAAA,CAAO,QAAA,CAAS,IAAI,CAAC,MAAL,CAAA,CAAA,GAAc,KAAvB,CAAA,GAA8B,IAArC,EADR;KAEA,aAAA;MAAM;MACJ,IAAG,GAAG,CAAC,IAAJ,KAAY,WAAf;QACE,MAAM,IADR;;MAGA,GAAA,GAAM,MAAA,CAAO,CAAP,EAJR;;IAMA,MAAM,CAAC,IAAP,GAAc,IAAA,GAAO,GAAG,CAAC,IAAI,CAAC,KAbhC;;EAeA,OAAO,CAAC,GAAR,CAAY,CAAA,UAAA,CAAA,CAAa,SAAb,CAAA,GAAA,CAAA,CAA4B,QAA5B,CAAA,CAAA,CAAA,GAAwC,IAApD;SACA,KAAA,CACE,IAAI,CAAC,IAAL,CAAU,IAAV,EAAgB,IAAhB,EAAsB,SAAtB,CADF,EAEE,EAFF;AAhCa",
+  "sourcesContent": [
+    "import {mcron} from './deps.js'\nimport upnp from './upnp.js'\nimport Udp from './udp.js'\nimport config from './config.js'\n\nexport default (redis)=>\n  config.$ = redis\n\n  transport = \"udp\"\n  hostname = \"0.0.0.0\"\n\n  listen = (port)=>\n    udp = Deno.listenDatagram {\n      port\n      transport\n      hostname\n    }\n    Udp udp\n    udp\n\n  port = (await config.port)\n  if port\n    port = parseInt(port)\n    udp = listen port\n  else\n\n    try\n      udp = listen parseInt(Math.random()*10000)+8081\n    catch err\n      if err.name != \"AddrInUse\"\n        throw err\n\n      udp = listen(0)\n\n    config.port = port = udp.addr.port\n\n  console.log \"listening #{transport}://#{hostname}:\"+port\n  mcron(\n    upnp.bind(upnp, port, transport)\n    14\n  )\n"
+  ]
+}

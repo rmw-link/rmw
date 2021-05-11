@@ -1,0 +1,5 @@
+#!/bin/sh
+
+npm run prepare
+npx md-include .markdown.json
+git add -u

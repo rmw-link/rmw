@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "hash.js",
+  "sourceRoot": "../..",
+  "sources": [
+    "src/redis/hash.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,IAAA;;AAAM,OAAN,MAAA,KAAA;EACE,WAAY,KAAA,GAAA,CAAA;IAAC,IAAC,CAAA;IAAM,IAAC,CAAA;EAAT;;AADd;;AAGA,OAAA,QAAe,CAAC,GAAD,EAAM,KAAN,CAAA,GAAA;AACf,MAAA;EAAE,IAAA,GAAO,IAAI,IAAJ,CAAS,GAAT,EAAc,KAAd;SACP,IAAI,KAAJ,CACE,IADF,EAEE;IAAA,GAAA,EAAI,CAAC,IAAD,EAAO,IAAP,CAAA,GAAA;MACF,IAAG,IAAI,CAAC,MAAL,CAAY,CAAZ,CAAA,KAAkB,GAArB;AACE,eAAO,IAAI,CAAC,IAAD,EADb;;aAGA,IAAI,CAAC,CAAC,CAAC,IAAP,CAAY,IAAI,CAAC,IAAjB,EAAuB,IAAvB;IAJE,CAAJ;IAMA,GAAA,EAAI,CAAC,IAAD,EAAO,IAAP,EAAa,GAAb,CAAA,GAAA;MACF,IAAG,IAAI,CAAC,MAAL,CAAY,CAAZ,CAAA,KAAkB,GAArB;QACE,IAAI,CAAC,IAAD,CAAJ,GAAa,IADf;OAAA,MAAA;QAGE,IAAI,CAAC,CAAC,CAAC,IAAP,CAAY,IAAI,CAAC,IAAjB,EAAuB,IAAvB,EAA6B,GAA7B,EAHF;;AAIA,aAAO;IALL,CANJ;IAaA,cAAA,EAAe,CAAC,IAAD,EAAO,IAAP,CAAA,GAAA;aACb,IAAI,CAAC,CAAC,CAAC,IAAP,CAAY,IAAI,CAAC,IAAjB,EAAuB,IAAvB;IADa,CAbf;IAgBA,GAAA,EAAI,CAAC,IAAD,EAAO,IAAP,CAAA,GAAA;aACF,IAAI,CAAC,CAAC,CAAC,OAAP,CAAe,IAAI,CAAC,IAApB,EAA0B,IAA1B;IADE,CAhBJ;IAmBA,SAAA,EAAU,CAAC,IAAD,CAAA,GAAA;aACR,IAAI,CAAC,CAAC,CAAC,OAAP,CAAe,IAAI,CAAC,IAApB;IADQ;EAnBV,CAFF;AAFa",
+  "sourcesContent": [
+    "class Hash\n  constructor:(@$key, @$)->\n\nexport default (key, redis)=>\n  hash = new Hash(key, redis)\n  new Proxy(\n    hash\n    get:(self, attr)=>\n      if attr.charAt(0) == \"$\"\n        return self[attr]\n\n      self.$.hget self.$key, attr\n\n    set:(self, attr, val)=>\n      if attr.charAt(0) == \"$\"\n        self[attr] = val\n      else\n        self.$.hset self.$key, attr, val\n      return true\n\n    deleteProperty:(self, attr)=>\n      self.$.hdel self.$key, attr\n\n    has:(self, attr)=>\n      self.$.hexists self.$key, attr\n\n    enumerate:(self)=>\n      self.$.hgetall self.$key\n  )\n"
+  ]
+}

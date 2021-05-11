@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "udp.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/udp.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAA,QAAe,KAAA,CAAC,GAAD,CAAA,GAAA;AACf,MAAA,GAAA,EAAA,MAAA,EAAA;EAAE,OAAO,CAAC,GAAR,CACE,CAAA,MAAM,GAAG,CAAC,IAAJ,CACJ,IAAI,UAAJ,CAAe,EAAf,CADI,EAEJ;IACE,QAAA,EAAS,eADX;IAEE,IAAA,EAAK,KAFP;IAGE,SAAA,EAAU;EAHZ,CAFI,CAAN,CADF;AAUA;SAAA,IAAA;IACE,CAAC,GAAD,EAAM,MAAN,CAAA,GAAgB,CAAA,MAAM,GAAG,CAAC,OAAJ,CACpB,IAAI,UAAJ,CAAe,IAAf,CADoB,CAAN;IAGhB,OAAO,CAAC,GAAR,CAAY,MAAZ;IACA,OAAO,CAAC,GAAR,CAAY,GAAZ;IACA,OAAO,CAAC,GAAR,CAAY,GAAG,CAAC,MAAhB;iBACA,OAAO,CAAC,GAAR,CAAY,EAAZ;EAPF,CAAA;;AAXa",
+  "sourcesContent": [
+    "export default (udp)=>\n  console.log(\n    await udp.send(\n      new Uint8Array([])\n      {\n        hostname:\"54.177.127.37\"\n        port:17944\n        transport:\"udp\"\n      }\n    )\n  )\n  loop\n    [msg, remote] = await udp.receive(\n      new Uint8Array(1472)\n    )\n    console.log remote\n    console.log msg\n    console.log msg.length\n    console.log \"\"\n"
+  ]
+}

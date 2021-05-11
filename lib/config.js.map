@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "config.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/config.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAO,IAAP,MAAA;;AAEA,OAAA,QAAe,IAAA,CAAK,QAAL",
+  "sourcesContent": [
+    "import Hash from './redis/hash.js'\n\nexport default Hash(\"config\")\n"
+  ]
+}

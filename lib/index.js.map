@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/index.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,OAAA;EAAQ,KAAR;EAAc,KAAd;EAAoB,MAApB;EAA2B,MAA3B;EAAkC,QAAlC;EAA2C,QAA3C;EAAoD,SAApD;EAA8D,GAA9D;EAAkE,OAAlE;EAA0E,QAA1E;EAAmF,QAAnF;CAAA,MAAA;;AACA,OAAO,OAAP,MAAA;;AACA,OAAO,IAAP,MAAA;;AAIA,OAAA,QAAe,KAAA,CAAA,CAAA,GAAA;AACf,MAAA,GAAA,EAAA,MAAA,EAAA,MAAA,EAAA,WAAA,EAAA,GAAA,EAAA,IAAA,EAAA,OAAA,EAAA,QAAA,EAAA,MAAA,EAAA;EAAE,GAAA,GAAM,GAAA,CAAI,KAAJ,CACJ,CAAC,IADG,CAAA,CAEJ,CAAC,OAFG,CAEK,OAFL,CAGJ,CAAC,MAHG,CAIF,aAJE,EAIY,aAJZ;EAON,CAAA,CAAC,OAAD,CAAA,GAAY,GAAG,CAAC,KAAJ,CAAA,CAAZ;EAEA,CAAA,CAAC,CAAD,EAAG,IAAH,EAAQ,GAAR,CAAA,GAAe,OAAf;EAEA,IAAG,CAAA,IAAK,IAAR;AACE,WADF;;EAGA,IAAG,CAAI,GAAP;IACE,GAAA,GAAM,QAAA,CAAS,OAAA,CAAA,CAAT,EAAmB,MAAnB,EADR;;EAGA,MAAM,SAAA,CAAU,GAAV;EAEN,WAAA,GAAc,QAAA,CAAS,GAAT,EAAc,aAAd;EACd,IAAG,CAAA,MAAM,MAAA,CAAO,WAAP,CAAN,CAAH;IACE,MAAA,GAAS,QAAA,CAAS,CAAA,MAAM,IAAI,CAAC,YAAL,CAAkB,WAAlB,CAAN,CAAT,EADX;GAAA,MAAA;IAGE,MAAA,GAAS,CAAA,EAHX;;EAKA,CAAA,CAAC,MAAD,CAAA,GAAW,MAAX;EAEA,IAAG,CAAI,MAAP;IACE,MAAA,GAAS;IACT,QAAA,GAAW,MAAA,CAAA;IACX,MAAM,CAAC,MAAP,GAAgB,MAAA,GAAS,CAAA,gBAAA,CAAA,CAAmB,QAAnB,CAAA,kBAAA,EAH3B;;EAKA,IAAG,MAAH;IACE,MAAM,IAAI,CAAC,aAAL,CACJ,WADI,EAEJ,QAAA,CAAS,MAAT,CAFI,EADR;;SAOA,IAAA,CACE,CAAA,MAAM,KAAA,CAAM,QAAA,CAAS,MAAT,CAAN,CAAN,CADF;AAxCa",
+  "sourcesContent": [
+    "import {Redis,equal,nanoid,exists,parseURL,pathJoin,ensureDir,cac,homedir,tomlLoad,tomlDump} from './deps.js'\nimport version from './version.js'\nimport boot from './boot.js'\n\n\n\nexport default =>\n  CLI = cac('rmw')\n    .help()\n    .version(version)\n    .option(\n      \"--dir [dir]\",\"profile dir\"\n    )\n\n  {options} = CLI.parse()\n\n  {v,help,dir} = options\n\n  if v or help\n    return\n\n  if not dir\n    dir = pathJoin homedir(),\".rmw\"\n\n  await ensureDir dir\n\n  config_path = pathJoin dir, \"config.toml\"\n  if await exists(config_path)\n    config = tomlLoad await Deno.readTextFile(config_path)\n  else\n    config = {}\n\n  {tendis} = config\n\n  if not tendis\n    change = true\n    password = nanoid()\n    config.tendis = tendis = \"redis://default:#{password}@127.0.0.1:51002/1\"\n\n  if change\n    await Deno.writeTextFile(\n      config_path\n      tomlDump config\n    )\n\n\n  boot(\n    await Redis(parseURL tendis)\n  )\n\n\n\n\n"
+  ]
+}
